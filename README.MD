@@ -59,12 +59,31 @@ Creëer de volgende directories:
 * app/frontend/Xsarus/classicmodels/registration.php
 * app/frontend/Xsarus/classicmodels/theme.xml
 * etc/view.xml
-* Magento_Theme/layout/default.xml
+* Magento_Theme/layout/default.xml (logo)
 * web/images/preview-image.jpg
 
 Ga naar je Admin pagina en kies voor Content/Design/Configuration/Edit/Applied Theme/classicmodels en druk op Save Configuration
 
 ### Zorg via Less / Css dat de kleuren van het thema passen bij het logo
 https://magento.stackexchange.com/questions/108685/how-to-add-a-custom-css-file-in-magento-2
+
+Zorg dat de volgende files goed staan: 
+* cp grunt-config.json.sample grunt-config.json
+* cp gruntfile.js.sample gruntfile.js
+* cp package.json.sample package.json
+
+Pas het pad aan in grunt-config.json naar: "app/design/frontend/Xsarus/classicmodels/themes.js"
+
+Creëer de volgende file:
+* app/design/frontend/Xsarus/classicmodels/themes.js
+
+Vul deze file a.h.v. een andere webshop(dlk/rol/tsf)
+
+Creëer de volgende directories:
+* app/frontend/Xsarus/classicmodels/web/css/source/_theme.less
+
+Vul deze file met css/less code.
+
+Zorg dat npm en grunt het op je directory doen.
 
 ~ F I N ~
