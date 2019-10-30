@@ -6,7 +6,7 @@ use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 
-class AddProductCommentAttribute implements DataPatchInterface
+class AddProductVendorAttribute implements DataPatchInterface
 {
     /** @var ModuleDataSetupInterface */
     private $moduleDataSetup;
@@ -34,9 +34,9 @@ class AddProductCommentAttribute implements DataPatchInterface
         /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
 
-        $eavSetup->addAttribute('catalog_product', 'product_comment', [
+        $eavSetup->addAttribute('catalog_product', 'product_vendor', [
             'type' => 'varchar',
-            'label' => 'Product Comment',
+            'label' => 'Product Vendor',
             'input' => 'text',
             'used_in_product_listing' => true,
             'user_defined' => false,

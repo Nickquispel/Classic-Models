@@ -106,11 +106,15 @@ In je lijst van modules zal je nu Xsarus_ERP zien staan.
 ### Maak via data patches de benodigde product attributen aan
 https://devdocs.magento.com/guides/v2.3/extension-dev-guide/attributes.html 
 https://markshust.com/2019/02/19/create-product-attribute-data-patch-magento-2.3-declarative-schema/
+https://devdocs.magento.com/guides/v2.3/extension-dev-guide/attributes.html 
 
-maak de volgende bestanden aan in de module Xsarus_ERP
-* app/code/Xsarus/XsarusERP/Setup/Patch/Data/{addAtribute.php}
+Voeg de missende attributen van producten toe:
+- productScale
+- productVendor
 
-de php file die je aanmaakt, zal de attribuut aanmakene en hier zul je dus verschillende aanmaken.
+Maak hiervoor de volgende bestanden aan:
+* app/code/Xsarus/XsarusERP/Setup/Patch/Data/AddProductScaleAttribute.php
+* app/code/Xsarus/XsarusERP/Setup/Patch/Data/AddProductVendorAttribute.php
 
 draai na het juist vullen de volgende commando:
 
@@ -118,7 +122,16 @@ draai na het juist vullen de volgende commando:
 
 Controleer in de database bij patch_list of je patch is toegevoegd. Controleer daarna bij de Magento admin site bij catalog/products/{product}/add_attribute of je attribuut is toegevoegd.
 
-Voeg de missende attributen toe:
+
+
+## Producten importeren
+https://www.mageplaza.com/magento-2-module-development/magento-2-how-to-add-command-line-console-cli.html 
+
+
+
+
+
+
 
 
 ~ F I N ~
