@@ -95,8 +95,8 @@ Indien postman het niet doet op je magento installatie, ga in het programma Post
 https://devdocs.magento.com/videos/fundamentals/create-a-new-module/ 
 
 Maak de volgende directory aan:
-app/code/Xsarus/Xsarus_ERP/etc/module.xml
-app/code/Xsarus/Xsarus_ERP/registration.php
+app/code/Xsarus/XsarusERP/etc/module.xml
+app/code/Xsarus/XsarusERP/registration.php
 
 Draai de volgende commando
 * php72 bin/magento setup:upgrade
@@ -104,18 +104,21 @@ Draai de volgende commando
 In je lijst van modules zal je nu Xsarus_ERP zien staan.
 
 ### Maak via data patches de benodigde product attributen aan
-https://devdocs.magento.com/videos/fundamentals/add-new-product-attribute/ 
-https://www.mageplaza.com/magento-2-module-development/magento-2-add-product-attribute-programmatically.html 
+https://devdocs.magento.com/guides/v2.3/extension-dev-guide/attributes.html 
+https://markshust.com/2019/02/19/create-product-attribute-data-patch-magento-2.3-declarative-schema/
 
 maak de volgende bestanden aan in de module Xsarus_ERP
-app/code/Xsarus/Xsarus_ERP/Setup/InstallData.php
+* app/code/Xsarus/XsarusERP/Setup/Patch/Data/{addAtribute.php}
 
-Draai de volgende commando:
+de php file die je aanmaakt, zal de attribuut aanmakene en hier zul je dus verschillende aanmaken.
+
+draai na het juist vullen de volgende commando:
+
 * php72 bin/magento setup:upgrade
 
+Controleer in de database bij patch_list of je patch is toegevoegd. Controleer daarna bij de Magento admin site bij catalog/products/{product}/add_attribute of je attribuut is toegevoegd.
 
-
-
+Voeg de missende attributen toe:
 
 
 ~ F I N ~
