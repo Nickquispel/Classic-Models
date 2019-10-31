@@ -125,7 +125,28 @@ Controleer in de database bij patch_list of je patch is toegevoegd. Controleer d
 
 
 ## Producten importeren
+
+### Console command maken
+* composer require guzzlehttp/guzzle
+
+https://devdocs.magento.com/guides/v2.3/extension-dev-guide/cli-cmds/cli-howto.html 
 https://www.mageplaza.com/magento-2-module-development/magento-2-how-to-add-command-line-console-cli.html 
+
+Creeër de volgende bestanden:
+* app/code/Xsarus/XsarusERP/Console/Command/ConsoleCommand.php
+* app/code/Xsarus/XsarusERP/etc/di.xml
+
+
+Draai de volgende commando's
+* php72 bin/magento setup:di:compile && php72 bin/magento setup:upgrade && php72 bin/magento cache:flush
+
+Indien je nu de command php72 bin/magento draait, zie je de nieuwe command die zojuist gemaakt is. Voor deze opdracht heet de command: products:import
+
+### Service maken
+https://belvg.com/blog/shortly-about-magento-2-0-web-apis.html
+
+Maak de volgende bestanden:
+* app/code/Xsarus/XsarusERP/Service/{php file}
 
 
 
