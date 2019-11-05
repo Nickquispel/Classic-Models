@@ -1,6 +1,7 @@
 <?php
     namespace Xsarus\XsarusERP\Console\Command;
 
+
     use Xsarus\XsarusERP\Service\ProductImport;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
@@ -32,17 +33,16 @@
          */
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            $output->writeln('<info>Success Message.</info>');
-            $output->writeln('<error>An error encountered.</error>');
-            $output->writeln("Hello World");
-            
-            
-            $webapi = new ProductImport('http://cmapi.nql-72.at.xsar.us:8082');
-            $output->writeln($webapi->getToken());
-            
-           
-            }
-    }
+            try{ 
+                $webapi = new ProductImport(
+                'http://cmapi.nql-72.at.xsar.us:8082',
+                'https://classic-models.nql-72.at.xsar.us:4431'
+            );
 
-
-    
+                $output->writeln($webapi->getToken());
+                
+               } catch (GuzzleHttp\Exception\ClientException $e) {
+                   echo $e->getMessage();
+               }        
+        }
+}
