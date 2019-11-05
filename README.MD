@@ -143,6 +143,9 @@ Draai de volgende commando's
 Indien je nu de command php72 bin/magento draait, zie je de nieuwe command die zojuist gemaakt is. Voor deze opdracht heet de command: products:import
 
 ### Service maken
+
+
+
 https://belvg.com/blog/shortly-about-magento-2-0-web-apis.html
 
 Maak de volgende bestanden:

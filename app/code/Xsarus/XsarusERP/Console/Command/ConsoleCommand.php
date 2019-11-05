@@ -32,19 +32,17 @@
          */
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-
-
-          try { $webapi = new ProductImport('http://localhost:8888');
-                $response = $webapi->getClient()->request('GET', '/api/products');
-                var_dump(json_decode($response->getBody()));
-                
-            } catch (GuzzleHttp\Exception\ClientException $e) {
-                echo $e->getMessage();
-            }
-
             $output->writeln('<info>Success Message.</info>');
             $output->writeln('<error>An error encountered.</error>');
             $output->writeln("Hello World");
             
-        }
+            
+            $webapi = new ProductImport('http://cmapi.nql-72.at.xsar.us:8082');
+            $output->writeln($webapi->getToken());
+            
+           
+            }
     }
+
+
+    

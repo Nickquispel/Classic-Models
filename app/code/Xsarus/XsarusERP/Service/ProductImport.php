@@ -14,14 +14,15 @@ class ProductImport
         $this->_client = new Client(['base_uri' => $url]);
  
         try {
-            $response = $this->_client->request('GET', '/api/products');
+            $response = $this->_client->get('/api/products');
             $this->_token = str_replace('"', '', $response->getBody()->getContents());
         } catch (GuzzleHttp\Exception\ClientException $e) {
             echo $e->getRequest();
             if ($e->hasResponse()) echo $e->getResponse();
         }
- 
+        
         return $this;
+        
     }
  
     public function getToken()
