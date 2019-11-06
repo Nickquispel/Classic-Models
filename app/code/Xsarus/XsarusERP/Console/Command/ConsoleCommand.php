@@ -1,19 +1,36 @@
 <?php
     namespace Xsarus\XsarusERP\Console\Command;
 
-
-    use Xsarus\XsarusERP\Service\ProductImport;
+use Psr\Log\LoggerInterface;
+use Xsarus\XsarusERP\Api\ProductImportInterface;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
+    use Xsarus\XsarusERP\Logger\Loggers;
 
     /**
      * Class ConsoleCommand
      */
     class ConsoleCommand extends Command
     {
-        
+        /**
+         * @var ProductImportInterface $productImport
+         */
+        protected $productImport;
+
+        /**
+         * @var LoggerInterface $logger
+         */
+        protected $logger;
+
+        public function __construct(ProductImportInterface $productImport, LoggerInterface $logger)
+        {
+            $this->productImport = $productImport;
+            $this->logger = $logger;
+            parent::__construct();
+        }
+
         /**
          * @inheritDoc
          */
@@ -33,16 +50,10 @@
          */
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            try{ 
-                $webapi = new ProductImport(
-                'http://cmapi.nql-72.at.xsar.us:8082',
-                'https://classic-models.nql-72.at.xsar.us:4431'
-            );
-
-                $output->writeln($webapi->getToken());
-                
-               } catch (GuzzleHttp\Exception\ClientException $e) {
-                   echo $e->getMessage();
-               }        
+            try {
+                $this->productImport->execute();
+            } catch (GuzzleHttp\Exception\ClientException $e) {
+                   $this->logger->error($e->getMessage());
+            }     
         }
 }

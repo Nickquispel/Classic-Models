@@ -7,5 +7,41 @@
             </argument>
         </arguments>
     </type>
-    ...
+    <type name="Xsarus\XsarusERP\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Xsarus\XsarusERP\Logger\Loggers">
+        <arguments>
+            <argument name="name" xsi:type="string">Loggers</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Xsarus\XsarusERP\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Xsarus\XsarusERP\Service\ProductImport">
+        <arguments>
+            <argument name="client1"  xsi:type="object">virtualtype1</argument>
+            <argument name="client2"  xsi:type="object">virtualtype2</argument>
+            </arguments>
+            </type>
+            <virtualType name= "virtualtype1" type="GuzzleHttp\Client">
+            <arguments>
+            <argument name="config" xsi:type="array">
+                <item name="base_uri" xsi:type="string">http://cmapi.nql-72.at.xsar.us:8082</item>
+                <item name="verify" xsi:type="boolean">false</item>
+            </argument>
+            </arguments>
+            </virtualType>
+            <virtualType name= "virtualtype2" type="GuzzleHttp\Client">
+                <arguments>
+                <argument name="config" xsi:type="array">
+                    <item name="base_uri" xsi:type="string">https://classic-models.nql-72.at.xsar.us:4431/</item>
+                    <item name="verify" xsi:type="boolean">false</item>
+                </argument>
+                </arguments>
+            </virtualType>
+    
+    <preference for="Xsarus\XsarusERP\Api\ProductImportInterface" type="Xsarus\XsarusERP\Service\ProductImport" />
 </config>

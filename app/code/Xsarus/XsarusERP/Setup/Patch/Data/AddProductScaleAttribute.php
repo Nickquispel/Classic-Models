@@ -1,6 +1,7 @@
 <?php
 namespace Xsarus\XsarusERP\Setup\Patch\Data;
 
+use Magento\Eav\Model\config;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
@@ -44,6 +45,12 @@ class AddProductScaleAttribute implements DataPatchInterface
             'apply_to' => 'simple',
 
         ]);
+
+        // $productscale = $this->eavConfig->getAttribute(Customer::ENTITY, 'product_scale' );
+        // $productscale->setData(
+        //     'used_in_forms',
+        //     []
+        // )
     }
 
     /**
