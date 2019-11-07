@@ -46,11 +46,6 @@ class AddProductScaleAttribute implements DataPatchInterface
 
         ]);
 
-        // $productscale = $this->eavConfig->getAttribute(Customer::ENTITY, 'product_scale' );
-        // $productscale->setData(
-        //     'used_in_forms',
-        //     []
-        // )
     }
 
     /**

@@ -10,99 +10,99 @@ use Magento\Framework\App\DeploymentConfig;
 class ProductImport implements ProductImportInterface
 {
     protected $_token;
-    
+
     protected $data;
 
     /**
-     * @var Client $client1
+     * @var Client $api
      */
-    protected $client1;
+    protected $api;
 
     /**
-     * @var Client $client2
+     * @var Client $import
      */
-    protected $client2;
+    protected $import;
 
     /**
      * @var LoggerInterface $logger
      */
 
-
-     /**
-      * @var DeploymentConfig $deploymentConfig
-      */
+    /**
+     * @var DeploymentConfig $deploymentConfig
+     */
     protected $deploymentConfig;
 
     public function __construct(
-        Client $client1,
-        Client $client2,
+        Client $api,
+        Client $import,
         LoggerInterface $logger,
         DeploymentConfig $deploymentConfig
-        )
-    {
-        
-        $this->client1 = $client1;
-        $this->client2 = $client2;
+    ) {
+
+        $this->api = $api;
+        $this->import = $import;
         $this->logger = $logger;
         $this->deploymentConfig = $deploymentConfig;
-    
     }
- 
+
     public function getToken()
     {
         return $this->_token;
     }
- 
+
     public function getClient()
     {
-        return $this->client2;
+        return $this->import;
     }
 
-    public function execute()
+    public function getData()
     {
-
         try {
-            $response = $this->client1->get('/api/products');
+            $response = $this->api->get('/api/products');
             $content = $response->getBody()->getContents();
-                        
-            $this->data = json_decode($content,true);
 
+            $this->data = json_decode($content, true);
+            return $this->data;
         } catch (GuzzleHttp\Exception\ClientException $e) {
             echo $e->getRequest() . PHP_EOL . PHP_EOL;
             if ($e->hasResponse()) echo $e->getResponse();
         }
+    }
 
+
+    public function exportData($dataToExport)
+    {
         try {
-            $response = $this->client2->request('POST','/rest/V1/integration/admin/token', [
-        'json' => [
-            'username' => $this->deploymentConfig->get('admin/username'),
-            'password' => $this->deploymentConfig->get('admin/password')
-            ]
-        ]);
+            $response = $this->import->request('POST', '/rest/V1/integration/admin/token', [
+                'json' => [
+                    'username' => $this->deploymentConfig->get('admin/username'),
+                    'password' => $this->deploymentConfig->get('admin/password')
+                ]
+            ]);
 
             $this->_token = str_replace('"', '', $response->getBody()->getContents());
 
-            foreach($this->data['hydra:member'] as $productcode)
-            {   
+            foreach ($this->data['hydra:member'] as $productcode) {
 
-            $product = array(
-                'sku' => $productcode['productcode'],
-                'name' => $productcode['productname'],
-                'price' => $productcode['msrp'],
-                'status' => '1',
-                'visibility' => '4',
-                'attribute_set_id' => '4',
-                'type_id' => 'simple',
-                'custom_attributes'=> [
-                    [
-                    'attribute_code' => 'product_scale',
-                    'value' => $productcode['productscale']
-                    ],
-                    [
-                    'attribute_code' => 'product_vendor',
-                    'value' => $productcode['productvendor']
-                    ]   
-                ]);
+                $product = array(
+                    'sku' => $productcode['productcode'],
+                    'name' => $productcode['productname'],
+                    'price' => $productcode['msrp'],
+                    'status' => '1',
+                    'visibility' => '4',
+                    'attribute_set_id' => '4',
+                    'type_id' => 'simple',
+                    'custom_attributes' => [
+                        [
+                            'attribute_code' => 'product_scale',
+                            'value' => $productcode['productscale']
+                        ],
+                        [
+                            'attribute_code' => 'product_vendor',
+                            'value' => $productcode['productvendor']
+                        ]
+                    ]
+                );
 
                 $response = $this->getClient()->request('POST', '/rest/V1/products', [
                     'headers' => [
@@ -111,18 +111,21 @@ class ProductImport implements ProductImportInterface
                     'json' => [
                         'product' => $product
                     ]
-                ]);    
-                echo($response->getBody());
-                $this->logger->info("Artikel". $productcode['productcode']."succesvol geimporteerd". PHP_EOL);
-                
+                ]);
+                echo ("Artikel " . $productcode['productcode'] . " succesvol geimporteerd" . PHP_EOL);
+                // echo($response->getBody());
+                $this->logger->info("Artikel " . $productcode['productcode'] . " succesvol geimporteerd" . PHP_EOL);
             }
-
         } catch (GuzzleHttp\Exception\ClientException $e) {
             echo $e->getRequest();
             if ($e->hasResponse()) echo $e->getResponse();
+            $this->logger->critical('Error message', ['exception' => $e]);
         }
+    }
 
-
-
+    public function execute()
+    {
+        $data = $this->getData();
+        $this->exportData($data);
     }
 }

@@ -151,14 +151,10 @@ Creeër de volgende bestanden:
 * app/code/Xsarus/XsarusERP/Service/ProductImport.php
 
 ### Logging toevoegen
-https://webkul.com/blog/create-a-custom-log-file-in-magento-2-using-monolog-and-logging-data-into-it/ 
+https://inchoo.net/magento-2/magento-2-logging/
 
+## Categorieën importeren
 
-Creeër de volgende bestanden:
-* app/code/Xsarus/XsarusERP/Logger/Handler.php
-* app/code/Xsarus/XsarusERP/Logger/Loggers.php
-
-Vul daarbij ook je di.xml aan
 
 
 
