@@ -67,10 +67,13 @@ class CategoryImport implements CategoryImportInterface
             echo $e->getRequest() . PHP_EOL . PHP_EOL;
             if ($e->hasResponse()) echo $e->getResponse();
         }
+        return $this->data;
     }
 
     public function checkForExistingCategory($data)
     {
+        // nog niet in Magento
+        $categoriesNotAvailable = [];
         try {
             $response = $this->import->request('POST', '/rest/V1/integration/admin/token', [
                 'json' => [
@@ -94,25 +97,27 @@ class CategoryImport implements CategoryImportInterface
                 $array[] =  $json['name'];
             }
 
-            $this->data['hydra:member'][] = [
-                'productline' => 'TEST XSARRUS'
-            ];
+            // $this->data['hydra:member'][] = [
+            //     'productline' => 'TEST XSARRUS'
+            // ];
 
             foreach ($this->data['hydra:member'] as $productline) {
                 if (in_array($productline['productline'], $array)) {
                     echo($productline['productline'] . ' gevonden' . PHP_EOL);
-                    unset($productline['productline']);
+                    unset($productline['productline']);                   
                 } else {
+                    $categoriesNotAvailable[] = $productline;
                     echo($productline['productline'] . ' niet gevonden' . PHP_EOL);
                 }
             }
-            var_dump($this->data['hydra:member']);
-            die;
+
         } catch (GuzzleHttp\Exception\ClientException $e) {
             echo $e->getRequest();
             if ($e->hasResponse()) echo $e->getResponse();
             $this->logger->critical('Error message', ['exception' => $e]);
         };
+       
+        return $categoriesNotAvailable;
     }
 
     public function exportData($dataToExport)
@@ -127,7 +132,7 @@ class CategoryImport implements CategoryImportInterface
 
             $this->_token = str_replace('"', '', $response->getBody()->getContents());
 
-            foreach ($this->data['hydra:member'] as $productline) {
+            foreach ($dataToExport as $productline) {
 
                 $category = array(
                     'name' => $productline['productline'],
