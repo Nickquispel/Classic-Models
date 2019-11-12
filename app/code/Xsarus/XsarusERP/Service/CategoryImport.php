@@ -100,7 +100,7 @@ class CategoryImport implements CategoryImportInterface
             // $this->data['hydra:member'][] = [
             //     'productline' => 'TEST XSARRUS'
             // ];
-
+            
             foreach ($this->data['hydra:member'] as $productline) {
                 if (in_array($productline['productline'], $array)) {
                     echo($productline['productline'] . ' gevonden' . PHP_EOL);
@@ -155,9 +155,9 @@ class CategoryImport implements CategoryImportInterface
                         'category' => $category
                     ]
                 ]);
-                echo ("Artikel " . $productline['productline'] . " succesvol geimporteerd" . PHP_EOL);
+                echo ("Categorie " . $productline['productline'] . " succesvol geimporteerd" . PHP_EOL);
                 // echo($response->getBody());
-                $this->logger->info("Artikel " . $productline['productline'] . " succesvol geimporteerd" . PHP_EOL);
+                $this->logger->info("Categorie " . $productline['productline'] . " succesvol geimporteerd" . PHP_EOL);
             }
         } catch (GuzzleHttp\Exception\ClientException $e) {
             echo $e->getRequest();
