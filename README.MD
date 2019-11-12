@@ -141,20 +141,31 @@ Draai de volgende commando's
 Indien je nu de command php72 bin/magento draait, zie je de nieuwe command die zojuist gemaakt is. Voor deze opdracht heet de command: products:import
 
 
-### Service maken
+### Artikelen importeren
 https://belvg.com/blog/shortly-about-magento-2-0-web-apis.html
 
 installeer guzzle:
 * composer require guzzlehttp/guzzle
 
 Creeër de volgende bestanden:
+* app/code/Xsarus/XsarusERP/ProductImportInterface.php
 * app/code/Xsarus/XsarusERP/Service/ProductImport.php
+* app/code/Xsarus/XsarusERP/Console/Command/ProductImportCommand.php
+
 
 ### Logging toevoegen
 https://inchoo.net/magento-2/magento-2-logging/
 
-## Categorieën importeren
 
+## Categorieën importeren
+Creeër de volgende bestanden:
+* app/code/Xsarus/XsarusERP/CategoryImportInterface.php
+* app/code/Xsarus/XsarusERP/Service/CategoryImport.php
+* app/code/Xsarus/XsarusERP/Console/Command/CategoryImportCommand.php
+
+
+## Voorraden importeren
+https://devdocs.magento.com/guides/v2.3/install-gde/prereq/install-rabbitmq.html
 
 
 
