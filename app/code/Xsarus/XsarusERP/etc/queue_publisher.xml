@@ -1,0 +1,5 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/publisher.xsd">
+    <publisher topic="product.stock">
+        <connection name="amqp" exchange="xsarus" disabled="false"/>
+    </publisher>
+</config>

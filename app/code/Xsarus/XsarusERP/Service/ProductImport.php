@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use Xsarus\XsarusERP\Api\ProductImportInterface;
 use Magento\Framework\App\DeploymentConfig;
-use Magento\Mtf\Util\Command\File\Export\Data;
 use Magento\Setup\Exception;
 
 class ProductImport implements ProductImportInterface

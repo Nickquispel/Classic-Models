@@ -5,6 +5,7 @@
             <argument name="commands" xsi:type="array">
                 <item name="XsarusERP_ProductImportCommand" xsi:type="object">Xsarus\XsarusERP\Console\Command\ProductImportCommand</item>
                 <item name="XsarusERP_CategoryImportCommand" xsi:type="object">Xsarus\XsarusERP\Console\Command\CategoryImportCommand</item>
+                <item name="XsarusERP_CategoryImportCommand" xsi:type="object">Xsarus\XsarusERP\Console\Command\StockImportCommand</item>
             </argument>
         </arguments>
     </type>
@@ -52,8 +53,31 @@
                 </argument>
                 </arguments>
             </virtualType>
+    <type name="Xsarus\XsarusERP\Service\StockImport">
+        <arguments>
+            <argument name="api"  xsi:type="object">virtualtype5</argument>
+            <argument name="import"  xsi:type="object">virtualtype6</argument>
+            </arguments>
+            </type>
+            <virtualType name= "virtualtype5" type="GuzzleHttp\Client">
+            <arguments>
+            <argument name="config" xsi:type="array">
+                <item name="base_uri" xsi:type="string">http://cmapi.nql-72.at.xsar.us:8082</item>
+                <item name="verify" xsi:type="boolean">false</item>
+            </argument>
+            </arguments>
+            </virtualType>
+            <virtualType name= "virtualtype6" type="GuzzleHttp\Client">
+                <arguments>
+                <argument name="config" xsi:type="array">
+                    <item name="base_uri" xsi:type="string">https://classic-models.nql-72.at.xsar.us:4431/</item>
+                    <item name="verify" xsi:type="boolean">false</item>
+                </argument>
+                </arguments>
+            </virtualType>
 
     <preference for="Xsarus\XsarusERP\Api\CategoryImportInterface" type="Xsarus\XsarusERP\Service\CategoryImport" />
     <preference for="Xsarus\XsarusERP\Api\ProductImportInterface" type="Xsarus\XsarusERP\Service\ProductImport" />
+    <preference for="Xsarus\XsarusERP\Api\StockImportInterface" type="Xsarus\XsarusERP\Service\StockImport" />
     <preference for="Psr\Log\LoggerInterface" type="Magento\Framework\Logger\Monolog"/>
 </config>

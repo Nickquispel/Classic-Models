@@ -166,6 +166,34 @@ Creeër de volgende bestanden:
 
 ## Voorraden importeren
 https://devdocs.magento.com/guides/v2.3/install-gde/prereq/install-rabbitmq.html
+https://www.rabbitmq.com/tutorials/tutorial-one-php.html
+https://potkoc.com/2018/11/17/how-to-implement-rabbitmq-in-magento-2-ce/ 
+https://devdocs.magento.com/guides/v2.3/extension-dev-guide/message-queues/config-mq.html 
+
+
+* sudo apt install php-amqplib
+
+Voeg toe aan je app/etc/env.php file:
+
+'queue' => [
+        'amqp' =>[
+            'host' => 'rabbitmq-dev-1.lan.local',
+            'port' => '5672',
+            'user' => 'dev',
+            'password' => 'Vi80u6ur',
+            'virtualhost' => '/cma'
+        ]
+    ]
+
+Omdat we met dockers werken moet je zorgen dat php met de juiste dockers kan werken.
+
+* docker network ls (toont dockerdevenv_default)
+* sudo nano ~/bin/php72 (volgende toevoegen: --network dockerdevenv_default)
+
+
+
+
+
 
 
 
