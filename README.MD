@@ -185,10 +185,76 @@ Voeg toe aan je app/etc/env.php file:
         ]
     ]
 
+Rabbitmq draait op localhost:
+* localhost:15672
+Login:
+* guest
+* guest
+
+Maak een Virtual Hosts aan (cma)
+Maak een user aan(dev) en geef hem de rechten voor cma 
+
 Omdat we met dockers werken moet je zorgen dat php met de juiste dockers kan werken.
 
 * docker network ls (toont dockerdevenv_default)
 * sudo nano ~/bin/php72 (volgende toevoegen: --network dockerdevenv_default)
+
+Maak een nieuwe command console (zie console command maken) en de volgende bestanden:
+* app/code/Xsarus/XsarusERP/Api/StockImportInterface.php
+* app/code/Xsarus/XsarusERP/Console/Command/StockImportCommand.php
+* app/code/Xsarus/XsarusERP/Service/StockImport.php
+
+Daarnaast moet je di.xml aanvullen
+
+Maak de volgende bestanden aan:
+* app/code/Xsarus/XsarusERP/etc/communication.xml
+* app/code/Xsarus/XsarusERP/etc/queue_consumer.xml
+* app/code/Xsarus/XsarusERP/etc/queue_publisher.xml
+* app/code/Xsarus/XsarusERP/etc/queue_topology.xml
+* app/code/Xsarus/XsarusERP/MessageQueue/ProductStockHandler.php
+
+De code die in je functie process staat wordt uitgevoerd wanneer je je queue start.
+Command om opdrachten in de queue te zetten:
+* php72 bin/magento import:stock
+
+Command om je queues te bekijken:
+* php72 bin/magento queue:consumers:list
+
+Command om de queue te starten
+* php72 bin/magento queue:consumers:start xsarus.product.stock --max-messages={aantal}
+
+### (Gebruik van Debug)
+
+{
+            "name": "Listen for XDebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9099,
+            "pathMappings": {
+                "/var/www": "/home/nick/www",
+            },
+            "xdebugSettings": {
+                "max_children": 256,
+                "max_depth": 3
+            }
+        },
+        {
+            "name": "Launch currently open script",
+            "type": "php",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${fileDirname}",
+            "port": 9099,
+            "pathMappings": {
+                "/var/www": "/home/nick/www",
+            },
+            "xdebugSettings": {
+                "max_children": 256,
+                "max_depth": 3
+            }
+        }
+    ]
+}
 
 
 

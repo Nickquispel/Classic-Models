@@ -4,16 +4,12 @@ namespace Xsarus\XsarusERP\Service;
 
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
-use Magento\Framework\App\DeploymentConfig;
 use Magento\Framework\MessageQueue\Publisher;
 use Xsarus\XsarusERP\Api\StockImportInterface;
 
 
 class StockImport implements StockImportInterface
 {
-    protected $_token;
-
-
     /**
      * @var Client $api
      */
@@ -25,32 +21,20 @@ class StockImport implements StockImportInterface
     protected $publisher;
 
     /**
-     * @var Client $import
-     */
-    protected $import;
-
-    /**
      * @var LoggerInterface $logger
      */
-
-    /**
-     * @var DeploymentConfig $deploymentConfig
-     */
-    protected $deploymentConfig;
+    protected $logger;
+  
 
     public function __construct(
         Client $api,
-        Client $import,
         LoggerInterface $logger,
-        DeploymentConfig $deploymentConfig,
         Publisher $publisher
 
     ) {
 
         $this->api = $api;
-        $this->import = $import;
         $this->logger = $logger;
-        $this->deploymentConfig = $deploymentConfig;
         $this->publisher = $publisher;
     }
 

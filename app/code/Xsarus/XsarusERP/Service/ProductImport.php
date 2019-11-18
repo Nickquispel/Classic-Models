@@ -26,7 +26,7 @@ class ProductImport implements ProductImportInterface
     /**
      * @var LoggerInterface $logger
      */
-
+    protected $logger;
     /**
      * @var DeploymentConfig $deploymentConfig
      */
