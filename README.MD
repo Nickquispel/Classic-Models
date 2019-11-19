@@ -257,11 +257,18 @@ Command om de queue te starten
 }
 
 
+## Afbeeldingen importeren
+https://magento.stackexchange.com/questions/162834/how-to-add-media-gallery-entries-via-rest-api-magento-2
 
+Maak een nieuwe console command aan:
+* app/code/Xsarus/XsarusERP/Console/Command/ProductImageImportCommand.php
 
+Maak de volgende bestanden aan:
+* app/code/Xsarus/XsarusERP/Service/ProductImageImport.php
+* app/code/Xsarus/XsarusERP/Api/ProductImageImportInterface.php
+* app/code/Xsarus/XsarusERP/Service/ProductImageImport.php
 
-
-
+vul di.xml aan
 
 
 

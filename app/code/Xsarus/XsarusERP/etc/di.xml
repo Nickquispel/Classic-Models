@@ -6,6 +6,7 @@
                 <item name="XsarusERP_ProductImportCommand" xsi:type="object">Xsarus\XsarusERP\Console\Command\ProductImportCommand</item>
                 <item name="XsarusERP_CategoryImportCommand" xsi:type="object">Xsarus\XsarusERP\Console\Command\CategoryImportCommand</item>
                 <item name="XsarusERP_StockImportCommand" xsi:type="object">Xsarus\XsarusERP\Console\Command\StockImportCommand</item>
+                <item name="XsarusERP_ProductImageImportCommand" xsi:type="object">Xsarus\XsarusERP\Console\Command\ProductImageImportCommand</item>
             </argument>
         </arguments>
     </type>
@@ -77,18 +78,22 @@
             </virtualType>
     <type name="Xsarus\XsarusERP\MessageQueue\ProductStockHandler">
         <arguments>
-            <argument name="api"  xsi:type="object">virtualtype7</argument>
-            <argument name="import"  xsi:type="object">virtualtype8</argument>
+            <argument name="import"  xsi:type="object">virtualtype7</argument>
             </arguments>
             </type>
             <virtualType name= "virtualtype7" type="GuzzleHttp\Client">
-            <arguments>
-            <argument name="config" xsi:type="array">
-                <item name="base_uri" xsi:type="string">http://cmapi.nql-72.at.xsar.us:8082</item>
-                <item name="verify" xsi:type="boolean">false</item>
-            </argument>
-            </arguments>
+                <arguments>
+                <argument name="config" xsi:type="array">
+                    <item name="base_uri" xsi:type="string">https://classic-models.nql-72.at.xsar.us:4431/</item>
+                    <item name="verify" xsi:type="boolean">false</item>
+                </argument>
+                </arguments>
             </virtualType>
+    <type name="Xsarus\XsarusERP\Service\ProductImageImport">
+        <arguments>
+            <argument name="import"  xsi:type="object">virtualtype8</argument>
+            </arguments>
+            </type>>
             <virtualType name= "virtualtype8" type="GuzzleHttp\Client">
                 <arguments>
                 <argument name="config" xsi:type="array">
@@ -101,5 +106,6 @@
     <preference for="Xsarus\XsarusERP\Api\CategoryImportInterface" type="Xsarus\XsarusERP\Service\CategoryImport" />
     <preference for="Xsarus\XsarusERP\Api\ProductImportInterface" type="Xsarus\XsarusERP\Service\ProductImport" />
     <preference for="Xsarus\XsarusERP\Api\StockImportInterface" type="Xsarus\XsarusERP\Service\StockImport" />
+    <preference for="Xsarus\XsarusERP\Api\ProductImageImportInterface" type="Xsarus\XsarusERP\Service\ProductImageImport" />
     <preference for="Psr\Log\LoggerInterface" type="Magento\Framework\Logger\Monolog"/>
 </config>
