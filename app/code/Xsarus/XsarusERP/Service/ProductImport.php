@@ -3,15 +3,14 @@
 namespace Xsarus\XsarusERP\Service;
 
 use GuzzleHttp\Client;
-use Psr\Log\LoggerInterface;
-use Xsarus\XsarusERP\Api\ProductImportInterface;
 use Magento\Framework\App\DeploymentConfig;
 use Magento\Setup\Exception;
+use Psr\Log\LoggerInterface;
+use Xsarus\XsarusERP\Api\ProductImportInterface;
 
 class ProductImport implements ProductImportInterface
 {
     protected $_token;
-
 
     /**
      * @var Client $api
@@ -38,7 +37,6 @@ class ProductImport implements ProductImportInterface
         LoggerInterface $logger,
         DeploymentConfig $deploymentConfig
     ) {
-
         $this->api = $api;
         $this->import = $import;
         $this->logger = $logger;
@@ -55,8 +53,6 @@ class ProductImport implements ProductImportInterface
         return $this->import;
     }
 
-
-
     public function getData()
     {
         try {
@@ -64,10 +60,13 @@ class ProductImport implements ProductImportInterface
             $content = $response->getBody()->getContents();
 
             $data = json_decode($content, true);
+            
             return $data;
         } catch (GuzzleHttp\Exception\ClientException $e) {
             echo $e->getRequest() . PHP_EOL . PHP_EOL;
-            if ($e->hasResponse()) echo $e->getResponse();
+            if ($e->hasResponse()) {
+                echo $e->getResponse();
+            }
         }
     }
 
@@ -92,11 +91,8 @@ class ProductImport implements ProductImportInterface
             $result = json_decode($response->getbody(), true);
             $categories = [];
             foreach ($result as $allCategories) {
-
                 if (is_array($allCategories)) {
-
                     foreach ($allCategories as $key => $value) {
-
                         if (!empty($value['parent_id']) && (int) $value['parent_id'] === 2) {
                             $categories[$value['name']] = $value['id'];
                         }
@@ -110,7 +106,6 @@ class ProductImport implements ProductImportInterface
                 $explode = explode('/api/productlines/', $product['productline']);
                 $categoryName = str_replace('%2520', ' ', $explode[1]);
 
-
                 if (!empty($categories[$categoryName])) {
                     $product['category_id'] = (array) $categories[$categoryName];
                     $products[] = $product;
@@ -119,11 +114,12 @@ class ProductImport implements ProductImportInterface
             return $products;
         } catch (GuzzleHttp\Exception\ClientException $e) {
             echo $e->getRequest();
-            if ($e->hasResponse()) echo $e->getResponse();
+            if ($e->hasResponse()) {
+                echo $e->getResponse();
+            }
             $this->logger->critical('Error message', ['exception' => $e]);
-        };
+        }
     }
-
 
     public function exportData($dataToExport)
     {
@@ -138,8 +134,7 @@ class ProductImport implements ProductImportInterface
             $this->_token = str_replace('"', '', $response->getBody()->getContents());
 
             foreach ($dataToExport as $productcode) {
-
-                $product = array(
+                $product = [
                     'sku' => $productcode['productcode'],
                     'name' => $productcode['productname'],
                     'price' => $productcode['msrp'],
@@ -162,7 +157,7 @@ class ProductImport implements ProductImportInterface
                         ]
                     ],
 
-                );
+                ];
 
                 $response = $this->getClient()->request('POST', '/rest/V1/products', [
                     'headers' => [
@@ -172,20 +167,21 @@ class ProductImport implements ProductImportInterface
                         'product' => $product
                     ]
                 ]);
-                echo ("Artikel " . $productcode['productcode'] . " succesvol geimporteerd" . PHP_EOL);
+                echo("Artikel " . $productcode['productcode'] . " succesvol geimporteerd" . PHP_EOL);
                 // echo($response->getBody());
                 $this->logger->info("Artikel " . $productcode['productcode'] . " succesvol geimporteerd" . PHP_EOL);
             }
         } catch (Exception $e) {
             echo $e->getRequest();
-            if ($e->hasResponse()) echo $e->getResponse();
+            if ($e->hasResponse()) {
+                echo $e->getResponse();
+            }
             $this->logger->critical('Error message', ['exception' => $e]);
         }
     }
 
     public function execute()
     {
-
         $data = $this->getData();
         $category = $this->addCategoryId($data);
         $this->exportData($category);
