@@ -35,7 +35,7 @@ php72 bin/magento setup:install
 --admin-lastname=admin 
 --admin-email=admin@hotmail.com 
 --admin-user=admin 
---admin-password=Heineken!!1 
+--admin-password=
 --language=en_US 
 --currency=USD 
 --timezone=America/Chicago 
